@@ -9,17 +9,21 @@ async function fetchRecentAnime() {
         const container = document.getElementById('animeList');
         container.innerHTML = ''; // Hapus loading text
 
-        data.recent.forEach(anime => {
-            const card = `
-                <div class="anime-card">
-                    <img src="${anime.image}" alt="${anime.title}">
-                    <h3>${anime.title}</h3>
-                    <p>Eps: ${anime.episode}</p>
-                    <button onclick="playAnime('${anime.id}')">Tonton</button>
-                </div>
-            `;
-            container.innerHTML += card;
-        });
+        // ... kode fetch sebelumnya ...
+
+// Bagian looping di dalam fetchRecentAnime:
+data.recent.forEach(anime => {
+    const card = `
+        <div class="anime-card" onclick="playAnime('${anime.id}')">
+            <img src="${anime.image}" alt="${anime.title}">
+            <div class="anime-info">
+                <h3>${anime.title}</h3>
+                <span class="episode-tag">Eps ${anime.episode}</span>
+            </div>
+        </div>
+    `;
+    container.innerHTML += card;
+});
     } catch (error) {
         console.error("Gagal mengambil data:", error);
         document.getElementById('animeList').innerHTML = "Gagal memuat data.";

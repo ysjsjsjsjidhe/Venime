@@ -1,0 +1,34 @@
+const apiBaseURL = "https://anime.anibiplay.my.id/api"; // Sesuaikan dengan dokumentasi API-nya
+
+async function fetchRecentAnime() {
+    try {
+        // Contoh endpoint untuk home/recent
+        const response = await fetch(`${apiBaseURL}/home`); 
+        const data = await response.json();
+        
+        const container = document.getElementById('animeList');
+        container.innerHTML = ''; // Hapus loading text
+
+        data.recent.forEach(anime => {
+            const card = `
+                <div class="anime-card">
+                    <img src="${anime.image}" alt="${anime.title}">
+                    <h3>${anime.title}</h3>
+                    <p>Eps: ${anime.episode}</p>
+                    <button onclick="playAnime('${anime.id}')">Tonton</button>
+                </div>
+            `;
+            container.innerHTML += card;
+        });
+    } catch (error) {
+        console.error("Gagal mengambil data:", error);
+        document.getElementById('animeList').innerHTML = "Gagal memuat data.";
+    }
+}
+
+function playAnime(id) {
+    alert("Mengarahkan ke ID: " + id);
+    // Di sini kamu bisa arahkan ke halaman detail atau buka modal player
+}
+
+fetchRecentAnime();
